@@ -5,16 +5,16 @@ import com.example.KameleoonTrialTask.dto.user.UserOutDto;
 import com.example.KameleoonTrialTask.exception.UserAlreadyExistEx;
 import com.example.KameleoonTrialTask.mapper.UserMapper;
 import com.example.KameleoonTrialTask.repository.UserRepo;
+import jakarta.transaction.Transactional;
 import lombok.Data;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
 import org.springframework.stereotype.Service;
 
-import java.util.List;
-import java.util.stream.Collector;
-import java.util.stream.Collectors;
-
 @Service
+@RequiredArgsConstructor
+@Transactional
 @Data
 public class UserService {
 
@@ -22,7 +22,7 @@ public class UserService {
     private UserRepo userRepo;
     private UserMapper userMapper;
 
-    private UserOutDto create(UserInDto userInDto) throws UserAlreadyExistEx {
+    public UserOutDto create(UserInDto userInDto) throws UserAlreadyExistEx {
         try {
             return userMapper.toDto(userRepo.save(userMapper.toUser(userInDto)));
         } catch (DataAccessException ex) {
