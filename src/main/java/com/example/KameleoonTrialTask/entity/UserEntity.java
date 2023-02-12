@@ -12,13 +12,15 @@ import java.time.LocalDateTime;
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
+@Table(name = "users")
 public class UserEntity {
 
     @Id
+    @Column(name = "id", nullable = false)
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(name = "name")
+    @Column(name = "name", unique = true)
     private String name;
 
     @Column(name = "email")
@@ -30,6 +32,6 @@ public class UserEntity {
 
     @CreationTimestamp
     @Column(name = "created")
-    private LocalDateTime created;
+    private LocalDateTime dataCreated;
 
 }
