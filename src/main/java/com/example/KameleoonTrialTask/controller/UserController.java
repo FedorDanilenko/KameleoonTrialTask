@@ -5,6 +5,7 @@ import com.example.KameleoonTrialTask.exception.UserAlreadyExistEx;
 import com.example.KameleoonTrialTask.service.UserService;
 import lombok.Data;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -19,6 +20,7 @@ public class UserController {
     @Autowired
     private UserService userService;
 
+    @PostMapping
     public void createUser(@Valid @RequestBody UserInDto userInDto) throws UserAlreadyExistEx {
         userService.create(userInDto);
     }

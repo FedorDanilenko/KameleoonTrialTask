@@ -49,7 +49,7 @@ public class QuoteService {
         return quoteMapper.toDto(quote);
     }
 
-    private QuoteOutDto updateQuote(Long id, QuoteInDto quoteInDto) throws QuoteNotFoundEx {
+    public QuoteOutDto updateQuote(Long id, QuoteInDto quoteInDto) throws QuoteNotFoundEx {
         QuoteEntity quote = quoteRepo.findById(id)
                 .orElseThrow(() -> new QuoteNotFoundEx("Quote not found"));
         quote.setText(quoteInDto.getText());
