@@ -5,12 +5,18 @@ import com.example.KameleoonTrialTask.dto.quote.QuoteOutDto;
 import com.example.KameleoonTrialTask.entity.QuoteEntity;
 import com.example.KameleoonTrialTask.entity.UserEntity;
 import com.example.KameleoonTrialTask.exception.QuoteAlreadyExistEx;
+import com.example.KameleoonTrialTask.exception.QuoteNotFoundEx;
 import com.example.KameleoonTrialTask.exception.UserNotFoundEx;
 import com.example.KameleoonTrialTask.mapper.QuoteMapper;
 import com.example.KameleoonTrialTask.repository.QuoteRepo;
 import com.example.KameleoonTrialTask.repository.UserRepo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import java.time.LocalDateTime;
+import java.util.List;
+import java.util.Optional;
+import java.util.Random;
 
 @Service
 public class QuoteService {
@@ -32,6 +38,24 @@ public class QuoteService {
         }
     }
 
+    public QuoteOutDto getRandomQuote() {
+        List<QuoteEntity> quotes = quoteRepo.findAll();
+        int size = quotes.size();
+        if (size == 0) {
+            return null;
+        }
+        int randomIndex = new Random().nextInt(size);
+        QuoteEntity quote = quotes.get(randomIndex);
+        return quoteMapper.toDto(quote);
+    }
+
+    private QuoteOutDto updateQuote(Long id, QuoteInDto quoteInDto) throws QuoteNotFoundEx {
+        QuoteEntity quote = quoteRepo.findById(id)
+                .orElseThrow(() -> new QuoteNotFoundEx("Quote not found"));
+        quote.setText(quoteInDto.getText());
+        quote.setDataCreated(LocalDateTime.now());
+        return quoteMapper.toDto(quoteRepo.saveAndFlush(quote));
+    }
 
 
 }
