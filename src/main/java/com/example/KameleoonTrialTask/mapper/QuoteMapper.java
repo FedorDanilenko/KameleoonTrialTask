@@ -18,5 +18,5 @@ public interface QuoteMapper {
     @Mapping(target = "id", ignore = true)
     QuoteEntity toQuote(QuoteInDto quoteInDto);
 
-    QuoteOutDto toDto(QuoteOutDto quoteOutDto);
+    QuoteOutDto toDto(QuoteEntity quoteEntity);
 }
