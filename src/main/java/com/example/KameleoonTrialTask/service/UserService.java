@@ -25,7 +25,7 @@ public class UserService {
     public UserOutDto create(UserInDto userInDto) throws UserAlreadyExistEx {
         try {
             return userMapper.toDto(userRepo.save(userMapper.toUser(userInDto)));
-        } catch (DataAccessException ex) {
+        } catch (Exception ex) {
             throw new UserAlreadyExistEx("User with this name already exists");
         }
     }
