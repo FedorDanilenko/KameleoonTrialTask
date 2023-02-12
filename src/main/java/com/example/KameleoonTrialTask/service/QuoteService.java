@@ -10,6 +10,7 @@ import com.example.KameleoonTrialTask.exception.UserNotFoundEx;
 import com.example.KameleoonTrialTask.mapper.QuoteMapper;
 import com.example.KameleoonTrialTask.repository.QuoteRepo;
 import com.example.KameleoonTrialTask.repository.UserRepo;
+import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -38,6 +39,11 @@ public class QuoteService {
         }
     }
 
+    public QuoteOutDto getQuote (Long id) throws QuoteNotFoundEx {
+        return quoteMapper.toDto(quoteRepo.findById(id)
+                .orElseThrow(() -> new QuoteNotFoundEx("Quote not found")));
+    }
+
     public QuoteOutDto getRandomQuote() {
         List<QuoteEntity> quotes = quoteRepo.findAll();
         int size = quotes.size();
@@ -49,6 +55,8 @@ public class QuoteService {
         return quoteMapper.toDto(quote);
     }
 
+
+    @Transactional
     public QuoteOutDto updateQuote(Long id, QuoteInDto quoteInDto) throws QuoteNotFoundEx {
         QuoteEntity quote = quoteRepo.findById(id)
                 .orElseThrow(() -> new QuoteNotFoundEx("Quote not found"));
@@ -56,6 +64,14 @@ public class QuoteService {
         quote.setDataCreated(LocalDateTime.now());
         return quoteMapper.toDto(quoteRepo.saveAndFlush(quote));
     }
+
+    @Transactional
+    public void deleteQuote (Long id) throws QuoteNotFoundEx {
+        QuoteEntity quote = quoteRepo.findById(id)
+                .orElseThrow(() -> new QuoteNotFoundEx("Quote not found"));
+        quoteRepo.delete(quote);
+    }
+
 
 
 }

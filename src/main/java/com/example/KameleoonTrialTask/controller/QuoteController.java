@@ -27,12 +27,22 @@ public class QuoteController {
     }
 
     @GetMapping
+    public QuoteOutDto getQuote(Long id) throws QuoteNotFoundEx {
+        return quoteService.getQuote(id);
+    }
+
+    @GetMapping
     public QuoteOutDto getRandomQuote() {
         return quoteService.getRandomQuote();
     }
 
-    @PostMapping("/{id}")
+    @PutMapping("/{id}")
     public QuoteOutDto update(@PathVariable("id") Long id, @Valid @RequestBody QuoteInDto quoteInDto) throws QuoteNotFoundEx {
         return quoteService.updateQuote(id, quoteInDto);
+    }
+
+    @DeleteMapping("/{id}")
+    public void delete(@PathVariable long id) throws QuoteNotFoundEx {
+        quoteService.deleteQuote(id);
     }
 }

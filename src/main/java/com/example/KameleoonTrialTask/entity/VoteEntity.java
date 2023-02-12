@@ -34,6 +34,8 @@ public class VoteEntity {
     @CreationTimestamp
     private LocalDateTime dataCreated;
 
-    @Column(nullable = false)
-    private boolean vote;
+    @Enumerated(EnumType.STRING)
+    @Column(name = "type")
+    private VoteType type;
+
 }
