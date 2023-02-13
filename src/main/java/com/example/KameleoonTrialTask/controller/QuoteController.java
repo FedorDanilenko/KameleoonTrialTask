@@ -1,5 +1,6 @@
 package com.example.KameleoonTrialTask.controller;
 
+import com.example.KameleoonTrialTask.dto.quote.QuoteDetailDto;
 import com.example.KameleoonTrialTask.dto.quote.QuoteInDto;
 import com.example.KameleoonTrialTask.dto.quote.QuoteOutDto;
 import com.example.KameleoonTrialTask.exception.*;
@@ -27,6 +28,11 @@ public class QuoteController {
     @GetMapping
     public QuoteOutDto getQuote(Long id) throws NotFoundEx {
         return quoteService.getQuote(id);
+    }
+
+    @GetMapping
+    public QuoteDetailDto getDetail(Long id) throws NotFoundEx {
+        return quoteService.getQuoteDetail(id);
     }
 
     @GetMapping

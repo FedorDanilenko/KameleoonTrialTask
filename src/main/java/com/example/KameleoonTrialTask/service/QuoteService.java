@@ -1,5 +1,6 @@
 package com.example.KameleoonTrialTask.service;
 
+import com.example.KameleoonTrialTask.dto.quote.QuoteDetailDto;
 import com.example.KameleoonTrialTask.dto.quote.QuoteInDto;
 import com.example.KameleoonTrialTask.dto.quote.QuoteOutDto;
 import com.example.KameleoonTrialTask.entity.QuoteEntity;
@@ -52,7 +53,10 @@ public class QuoteService {
         return quoteMapper.toDto(quote);
     }
 
-
+    public QuoteDetailDto getQuoteDetail(Long id) throws NotFoundEx {
+        return quoteMapper.toDetail(quoteRepo.findById(id)
+                .orElseThrow(() -> new NotFoundEx("Quote not found")));
+    }
     @Transactional
     public QuoteOutDto updateQuote(Long id, QuoteInDto quoteInDto) throws NotFoundEx {
         QuoteEntity quote = quoteRepo.findById(id)

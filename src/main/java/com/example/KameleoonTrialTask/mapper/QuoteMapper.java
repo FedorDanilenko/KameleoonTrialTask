@@ -1,5 +1,6 @@
 package com.example.KameleoonTrialTask.mapper;
 
+import com.example.KameleoonTrialTask.dto.quote.QuoteDetailDto;
 import com.example.KameleoonTrialTask.dto.quote.QuoteInDto;
 import com.example.KameleoonTrialTask.dto.quote.QuoteOutDto;
 import com.example.KameleoonTrialTask.dto.user.UserInDto;
@@ -19,4 +20,6 @@ public interface QuoteMapper {
     QuoteEntity toQuote(QuoteInDto quoteInDto);
 
     QuoteOutDto toDto(QuoteEntity quoteEntity);
+
+    QuoteDetailDto toDetail(QuoteEntity quote);
 }
