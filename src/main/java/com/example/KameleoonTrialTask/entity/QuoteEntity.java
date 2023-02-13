@@ -34,8 +34,11 @@ public class QuoteEntity {
     @CreationTimestamp
     private LocalDateTime dataCreated;
 
+    @Transient
+    private Long score;
+
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "quote", orphanRemoval = true)
-    private Set<VoteEntity> votes = new LinkedHashSet<>();
+    private Set<VoteEntity> votes;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id")
