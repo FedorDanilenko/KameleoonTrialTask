@@ -1,10 +1,12 @@
 package com.example.KameleoonTrialTask.service;
 
+import com.example.KameleoonTrialTask.dto.graph.GraphVoteDto;
 import com.example.KameleoonTrialTask.entity.QuoteEntity;
 import com.example.KameleoonTrialTask.entity.UserEntity;
 import com.example.KameleoonTrialTask.entity.VoteEntity;
 import com.example.KameleoonTrialTask.entity.VoteType;
 import com.example.KameleoonTrialTask.exception.NotFoundEx;
+import com.example.KameleoonTrialTask.mapper.VoteMapper;
 import com.example.KameleoonTrialTask.repository.QuoteRepo;
 import com.example.KameleoonTrialTask.repository.UserRepo;
 import com.example.KameleoonTrialTask.repository.VoteRepo;
@@ -23,6 +25,7 @@ public class VoteService {
     private UserRepo userRepo;
     private QuoteRepo quoteRepo;
     private VoteRepo voteRepo;
+    private VoteMapper voteMapper;
 
 
     public void voteUp (Long quoteId, Long userId) throws NotFoundEx {
@@ -64,7 +67,7 @@ public class VoteService {
         }
     }
 
-    public Map<Timestamp, Integer> getVoteHistory(Long qouteId) {
+    public GraphVoteDto getVoteHistory(Long qouteId) {
         List<VoteEntity> votes = voteRepo.findAllByQuoteId(qouteId);
         Map<Timestamp, Integer> voteHistory = new HashMap<>();
         for (VoteEntity vote : votes) {
@@ -83,6 +86,6 @@ public class VoteService {
                 }
             }
         }
-        return voteHistory;
+        return voteMapper.toGraphVoteDto(voteHistory);
     }
 }

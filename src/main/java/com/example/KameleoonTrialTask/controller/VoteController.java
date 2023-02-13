@@ -1,5 +1,6 @@
 package com.example.KameleoonTrialTask.controller;
 
+import com.example.KameleoonTrialTask.dto.graph.GraphVoteDto;
 import com.example.KameleoonTrialTask.exception.NotFoundEx;
 import com.example.KameleoonTrialTask.service.VoteService;
 import jakarta.persistence.criteria.CriteriaBuilder;
@@ -29,7 +30,7 @@ public class VoteController {
     }
 
     @GetMapping
-    public Map<Timestamp, Integer> getVoteHistory (@PathVariable Long quoteId) {
+    public GraphVoteDto getVoteHistory (@PathVariable Long quoteId) {
         return voteService.getVoteHistory(quoteId);
     }
 
