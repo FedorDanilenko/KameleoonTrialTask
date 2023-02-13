@@ -4,9 +4,7 @@ import com.example.KameleoonTrialTask.dto.quote.QuoteInDto;
 import com.example.KameleoonTrialTask.dto.quote.QuoteOutDto;
 import com.example.KameleoonTrialTask.entity.QuoteEntity;
 import com.example.KameleoonTrialTask.entity.UserEntity;
-import com.example.KameleoonTrialTask.exception.QuoteAlreadyExistEx;
-import com.example.KameleoonTrialTask.exception.QuoteNotFoundEx;
-import com.example.KameleoonTrialTask.exception.UserNotFoundEx;
+import com.example.KameleoonTrialTask.exception.*;
 import com.example.KameleoonTrialTask.mapper.QuoteMapper;
 import com.example.KameleoonTrialTask.repository.QuoteRepo;
 import com.example.KameleoonTrialTask.repository.UserRepo;
@@ -16,7 +14,6 @@ import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
 import java.util.List;
-import java.util.Optional;
 import java.util.Random;
 
 @Service
@@ -27,21 +24,21 @@ public class QuoteService {
     private QuoteMapper quoteMapper;
     private UserRepo userRepo;
 
-    public QuoteOutDto addQuote(QuoteInDto quoteInDto) throws QuoteAlreadyExistEx, UserNotFoundEx {
+    public QuoteOutDto addQuote(QuoteInDto quoteInDto) throws AlreadyExistEx, NotFoundEx {
         UserEntity user = userRepo.findById(quoteInDto.getUserId())
-                .orElseThrow(() -> new UserNotFoundEx("User Not Found"));
+                .orElseThrow(() -> new NotFoundEx("User Not Found"));
         QuoteEntity quote = quoteMapper.toQuote(quoteInDto);
         quote.setUser(user);
         try {
             return quoteMapper.toDto(quoteRepo.save(quote));
         } catch (Exception ex) {
-            throw new QuoteAlreadyExistEx("Quote Already Exist");
+            throw new AlreadyExistEx("Quote Already Exist");
         }
     }
 
-    public QuoteOutDto getQuote (Long id) throws QuoteNotFoundEx {
+    public QuoteOutDto getQuote (Long id) throws NotFoundEx {
         return quoteMapper.toDto(quoteRepo.findById(id)
-                .orElseThrow(() -> new QuoteNotFoundEx("Quote not found")));
+                .orElseThrow(() -> new NotFoundEx("Quote not found")));
     }
 
     public QuoteOutDto getRandomQuote() {
@@ -57,18 +54,18 @@ public class QuoteService {
 
 
     @Transactional
-    public QuoteOutDto updateQuote(Long id, QuoteInDto quoteInDto) throws QuoteNotFoundEx {
+    public QuoteOutDto updateQuote(Long id, QuoteInDto quoteInDto) throws NotFoundEx {
         QuoteEntity quote = quoteRepo.findById(id)
-                .orElseThrow(() -> new QuoteNotFoundEx("Quote not found"));
+                .orElseThrow(() -> new NotFoundEx("Quote not found"));
         quote.setText(quoteInDto.getText());
         quote.setDataCreated(LocalDateTime.now());
         return quoteMapper.toDto(quoteRepo.saveAndFlush(quote));
     }
 
     @Transactional
-    public void deleteQuote (Long id) throws QuoteNotFoundEx {
+    public void deleteQuote (Long id) throws NotFoundEx {
         QuoteEntity quote = quoteRepo.findById(id)
-                .orElseThrow(() -> new QuoteNotFoundEx("Quote not found"));
+                .orElseThrow(() -> new NotFoundEx("Quote not found"));
         quoteRepo.delete(quote);
     }
 

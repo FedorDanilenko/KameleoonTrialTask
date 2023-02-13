@@ -1,7 +1,7 @@
 package com.example.KameleoonTrialTask.controller;
 
 import com.example.KameleoonTrialTask.dto.user.UserInDto;
-import com.example.KameleoonTrialTask.exception.UserAlreadyExistEx;
+import com.example.KameleoonTrialTask.exception.AlreadyExistEx;
 import com.example.KameleoonTrialTask.service.UserService;
 import lombok.Data;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,7 +21,7 @@ public class UserController {
     private UserService userService;
 
     @PostMapping
-    public void createUser(@Valid @RequestBody UserInDto userInDto) throws UserAlreadyExistEx {
+    public void createUser(@Valid @RequestBody UserInDto userInDto) throws AlreadyExistEx {
         userService.create(userInDto);
     }
 

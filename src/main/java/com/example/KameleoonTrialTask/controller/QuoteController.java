@@ -2,9 +2,7 @@ package com.example.KameleoonTrialTask.controller;
 
 import com.example.KameleoonTrialTask.dto.quote.QuoteInDto;
 import com.example.KameleoonTrialTask.dto.quote.QuoteOutDto;
-import com.example.KameleoonTrialTask.exception.QuoteAlreadyExistEx;
-import com.example.KameleoonTrialTask.exception.QuoteNotFoundEx;
-import com.example.KameleoonTrialTask.exception.UserNotFoundEx;
+import com.example.KameleoonTrialTask.exception.*;
 import com.example.KameleoonTrialTask.service.QuoteService;
 import lombok.Data;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,12 +20,12 @@ public class QuoteController {
     private QuoteService quoteService;
 
     @PostMapping
-    public QuoteOutDto addQuote (@Valid @RequestBody QuoteInDto quoteInDto) throws UserNotFoundEx, QuoteAlreadyExistEx {
+    public QuoteOutDto addQuote (@Valid @RequestBody QuoteInDto quoteInDto) throws NotFoundEx, AlreadyExistEx {
         return quoteService.addQuote(quoteInDto);
     }
 
     @GetMapping
-    public QuoteOutDto getQuote(Long id) throws QuoteNotFoundEx {
+    public QuoteOutDto getQuote(Long id) throws NotFoundEx {
         return quoteService.getQuote(id);
     }
 
@@ -37,12 +35,12 @@ public class QuoteController {
     }
 
     @PutMapping("/{id}")
-    public QuoteOutDto update(@PathVariable("id") Long id, @Valid @RequestBody QuoteInDto quoteInDto) throws QuoteNotFoundEx {
+    public QuoteOutDto update(@PathVariable("id") Long id, @Valid @RequestBody QuoteInDto quoteInDto) throws NotFoundEx {
         return quoteService.updateQuote(id, quoteInDto);
     }
 
     @DeleteMapping("/{id}")
-    public void delete(@PathVariable long id) throws QuoteNotFoundEx {
+    public void delete(@PathVariable long id) throws NotFoundEx {
         quoteService.deleteQuote(id);
     }
 }
