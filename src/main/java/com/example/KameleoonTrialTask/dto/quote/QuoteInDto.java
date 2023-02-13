@@ -12,5 +12,5 @@ public class QuoteInDto {
     private String text;
 
     @NotNull
-    private long userId;
+    private Long userId;
 }
