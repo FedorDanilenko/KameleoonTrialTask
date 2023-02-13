@@ -23,7 +23,9 @@ public class VoteService {
 
     @Autowired
     private UserRepo userRepo;
+    @Autowired
     private QuoteRepo quoteRepo;
+    @Autowired
     private VoteRepo voteRepo;
     private VoteMapper voteMapper;
 

@@ -1,9 +1,11 @@
 package com.example.KameleoonTrialTask.service;
 
+import com.example.KameleoonTrialTask.dto.graph.ListQuoteDto;
 import com.example.KameleoonTrialTask.dto.quote.QuoteDetailDto;
 import com.example.KameleoonTrialTask.dto.quote.QuoteInDto;
 import com.example.KameleoonTrialTask.dto.quote.QuoteOutDto;
 import com.example.KameleoonTrialTask.entity.QuoteEntity;
+import com.example.KameleoonTrialTask.entity.SortType;
 import com.example.KameleoonTrialTask.entity.UserEntity;
 import com.example.KameleoonTrialTask.exception.*;
 import com.example.KameleoonTrialTask.mapper.QuoteMapper;
@@ -23,6 +25,7 @@ public class QuoteService {
     @Autowired
     private QuoteRepo quoteRepo;
     private QuoteMapper quoteMapper;
+    @Autowired
     private UserRepo userRepo;
 
     public QuoteOutDto addQuote(QuoteInDto quoteInDto) throws AlreadyExistEx, NotFoundEx {
@@ -40,6 +43,19 @@ public class QuoteService {
     public QuoteOutDto getQuote (Long id) throws NotFoundEx {
         return quoteMapper.toDto(quoteRepo.findById(id)
                 .orElseThrow(() -> new NotFoundEx("Quote not found")));
+    }
+
+    public ListQuoteDto getTop(SortType sortType) {
+        List<QuoteEntity> quotes = quoteRepo.findAll();
+        if (sortType == SortType.TOP) {
+            quotes.sort((q1, q2) -> (int) (q2.getScore() - q1.getScore()));
+        } else {
+            quotes.sort((q1, q2) -> (int) (q1.getScore() - q2.getScore()));
+        }
+        if (quotes.size() > 10) {
+            quotes = quotes.subList(0, 10);
+        }
+        return quoteMapper.toList(quotes);
     }
 
     public QuoteOutDto getRandomQuote() {

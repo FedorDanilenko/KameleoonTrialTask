@@ -6,6 +6,7 @@ import org.hibernate.annotations.CreationTimestamp;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.util.Set;
 
 @Entity
 @Data
@@ -33,5 +34,11 @@ public class UserEntity {
     @CreationTimestamp
     @Column(name = "created")
     private LocalDateTime dataCreated;
+
+    @OneToMany(mappedBy = "user", orphanRemoval = true)
+    private Set<QuoteEntity> quotes;
+
+    @OneToMany(mappedBy = "user", orphanRemoval = true)
+    private Set<VoteEntity> votes;
 
 }
