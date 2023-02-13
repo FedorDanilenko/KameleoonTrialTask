@@ -8,7 +8,8 @@ import java.util.List;
 
 @Repository
 public interface VoteRepo extends JpaRepository<VoteEntity, Long> {
+
+    List<VoteEntity> findAllByQuoteId(Long qouteId);
     VoteEntity findByQuoteIdAndUserId(Long quoteId, Long userId);
 
-    List<VoteEntity> findAllByQuoteIdOrderByTimestampAsc(Long quoteId);
 }

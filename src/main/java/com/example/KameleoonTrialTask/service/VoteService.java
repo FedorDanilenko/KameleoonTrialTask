@@ -11,7 +11,10 @@ import com.example.KameleoonTrialTask.repository.VoteRepo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.sql.Timestamp;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @Service
 public class VoteService {
@@ -61,7 +64,25 @@ public class VoteService {
         }
     }
 
-    public List<VoteEntity> getVoteHistory (Long quoteId) {
-        return voteRepo.findAllByQuoteIdOrderByTimestampAsc(quoteId);
+    public Map<Timestamp, Integer> getVoteHistory(Long qouteId) {
+        List<VoteEntity> votes = voteRepo.findAllByQuoteId(qouteId);
+        Map<Timestamp, Integer> voteHistory = new HashMap<>();
+        for (VoteEntity vote : votes) {
+            Timestamp timestamp = Timestamp.valueOf(vote.getDataCreated());
+            if (voteHistory.containsKey(timestamp)) {
+                if (vote.getType() == VoteType.UP) {
+                    voteHistory.put(timestamp, voteHistory.get(timestamp) + 1);
+                } else {
+                    voteHistory.put(timestamp, voteHistory.get(timestamp) - 1);
+                }
+            } else {
+                if (vote.getType() == VoteType.UP) {
+                    voteHistory.put(timestamp, 1);
+                } else {
+                    voteHistory.put(timestamp, -1);
+                }
+            }
+        }
+        return voteHistory;
     }
 }
