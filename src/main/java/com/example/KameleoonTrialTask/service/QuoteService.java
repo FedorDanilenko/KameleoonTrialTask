@@ -24,6 +24,7 @@ public class QuoteService {
 
     @Autowired
     private QuoteRepo quoteRepo;
+    @Autowired
     private QuoteMapper quoteMapper;
     @Autowired
     private UserRepo userRepo;

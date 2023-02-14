@@ -5,11 +5,13 @@ import lombok.*;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
-
+import java.io.Serializable;
 
 
 @Data
-public class UserInDto {
+@AllArgsConstructor
+@NoArgsConstructor
+public class UserInDto implements Serializable {
 
     @NotNull
     @NotBlank
@@ -17,10 +19,10 @@ public class UserInDto {
 
     @NotBlank
     @NotNull
+    @Email
     private String email;
 
     @NotNull
     @NotBlank
-    @Email
     private String password;
 }
