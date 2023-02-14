@@ -7,23 +7,12 @@ import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 import org.mapstruct.ReportingPolicy;
 
-public class UserMapper {
+@Mapper(unmappedTargetPolicy = ReportingPolicy.IGNORE, componentModel = "spring")
+public interface UserMapper {
 
-    public static UserEntity toUser(UserInDto userInDto){
-        return UserEntity.builder()
-                .name(userInDto.getName())
-                .email(userInDto.getEmail())
-                .password(userInDto.getPassword())
-                .build();
-    }
+    @Mapping(target = "dataCreated", expression = "java(java.time.LocalDateTime.now())")
+    UserEntity toUser(UserInDto userInDto);
 
-    public static UserOutDto toDto(UserEntity userEntity){
-        return UserOutDto.builder()
-                .id(userEntity.getId())
-                .name(userEntity.getName())
-                .email(userEntity.getEmail())
-                .dataCreated(userEntity.getDataCreated())
-                .build();
-    }
+    UserOutDto toDto(UserEntity userEntity);
 
 }

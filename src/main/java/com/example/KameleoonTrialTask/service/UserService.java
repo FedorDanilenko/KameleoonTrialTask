@@ -23,7 +23,7 @@ public class UserService {
 
     @Autowired
     private UserRepo userRepo;
-
+    @Autowired
     private UserMapper userMapper;
 
     public UserOutDto create(UserInDto userInDto) throws AlreadyExistEx {
