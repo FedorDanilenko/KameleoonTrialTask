@@ -10,7 +10,7 @@ COPY --from=git /app/KameleoonTrialTask /app
 RUN --mount=type=cache,target=/root/.m2 mvn clean package -Dmaven.test.skip
 
 
-FROM openjdk:17-jdk-slim as run
+FROM openjdk:17-alpine as run
 WORKDIR /app
 COPY --from=build /app/target/*.jar /app/app.jar
 
