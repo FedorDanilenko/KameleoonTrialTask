@@ -1,0 +1,12 @@
+version: '2.16.0'
+
+services:
+  app:
+    build:
+      context: .
+      args:
+        URL_GIT: https://github.com/FedorDanilenko/KameleoonTrialTask.git
+    container_name: kameleoontrialtask
+    restart: unless-stopped
+    ports:
+      - "8080:8080"

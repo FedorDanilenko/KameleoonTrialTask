@@ -6,11 +6,11 @@ RUN git clone $URL_GIT
 
 FROM maven:alpine as build
 WORKDIR /app
-COPY --from=git /src/main/java/com/example/KameleoonTrialTask /app
+COPY --from=git /app/KameleoonTrialTask /app
 RUN --mount=type=cache,target=/root/.m2 mvn clean package -Dmaven.test.skip
 
 
-FROM amazoncorretto:8 as run
+FROM openjdk:17-jdk-slim as run
 WORKDIR /app
 COPY --from=build /app/target/*.jar /app/app.jar
 
