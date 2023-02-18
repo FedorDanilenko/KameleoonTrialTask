@@ -2,6 +2,7 @@ version: '2.16.0'
 
 services:
   app:
+    mem_limit: 10g
     build:
       context: .
       args:
