@@ -5,20 +5,35 @@ import com.example.KameleoonTrialTask.dto.quote.QuoteDetailDto;
 import com.example.KameleoonTrialTask.dto.quote.QuoteInDto;
 import com.example.KameleoonTrialTask.dto.quote.QuoteOutDto;
 import com.example.KameleoonTrialTask.entity.QuoteEntity;
-import org.mapstruct.Mapper;
-import org.mapstruct.Mapping;
 
 import java.util.List;
 
-@Mapper
-public interface QuoteMapper {
+public class QuoteMapper {
 
-    @Mapping(target = "id", ignore = true)
-    QuoteEntity toQuote(QuoteInDto quoteInDto);
+    public static QuoteEntity toQuote(QuoteInDto quoteInDto){
+        return QuoteEntity.builder()
+                .id(quoteInDto.getUserId())
+                .text(quoteInDto.getText())
+                .build();
+    }
 
-    QuoteOutDto toDto(QuoteEntity quoteEntity);
+    public static QuoteOutDto toDto(QuoteEntity quoteEntity){
+        return QuoteOutDto.builder()
+                .id(quoteEntity.getId())
+                .text(quoteEntity.getText())
+                .score(quoteEntity.getScore())
+                .build();
+    }
 
-    QuoteDetailDto toDetail(QuoteEntity quote);
+    public static QuoteDetailDto toDetail(QuoteEntity quote){
+        return QuoteDetailDto.builder()
+                .id(quote.getId())
+                .text(quote.getText())
+                .build();
+    }
 
-    ListQuoteDto toList(List<QuoteEntity> quotes);
+    public static ListQuoteDto toListTop(List<QuoteEntity> quotes){
+        return ListQuoteDto.builder()
+                .quotes(quotes).build();
+    }
 }

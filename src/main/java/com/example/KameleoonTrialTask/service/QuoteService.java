@@ -24,6 +24,7 @@ public class QuoteService {
 
     @Autowired
     private QuoteRepo quoteRepo;
+    @Autowired
     private QuoteMapper quoteMapper;
     @Autowired
     private UserRepo userRepo;
@@ -55,7 +56,7 @@ public class QuoteService {
         if (quotes.size() > 10) {
             quotes = quotes.subList(0, 10);
         }
-        return quoteMapper.toList(quotes);
+        return quoteMapper.toListTop(quotes);
     }
 
     public QuoteOutDto getRandomQuote() {

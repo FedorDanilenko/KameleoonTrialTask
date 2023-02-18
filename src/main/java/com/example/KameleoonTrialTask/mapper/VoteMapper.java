@@ -6,8 +6,10 @@ import org.mapstruct.Mapper;
 import java.sql.Timestamp;
 import java.util.Map;
 
-@Mapper
-public interface VoteMapper {
+public class VoteMapper {
 
-    GraphVoteDto toGraphVoteDto(Map<Timestamp, Integer> map);
+    public static GraphVoteDto toGraphVoteDto(Map<Timestamp, Integer> map){
+        return GraphVoteDto.builder()
+                .map(map).build();
+    }
 }
