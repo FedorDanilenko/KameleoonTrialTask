@@ -19,12 +19,11 @@ import org.springframework.validation.annotation.Validated;
 @RequiredArgsConstructor
 @Transactional
 @Data
-@Builder
 public class UserService {
 
     @Autowired
     private UserRepo userRepo;
-    @Autowired
+
     private UserMapper userMapper;
 
     public UserOutDto create(UserInDto userInDto) throws AlreadyExistEx {

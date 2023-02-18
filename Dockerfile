@@ -1,17 +1,13 @@
-FROM alpine/git as git
-ARG URL_GIT
-ENV URL_GIT $URL_GIT
-WORKDIR /app
-RUN git clone $URL_GIT
+FROM openjdk:17-alpine as build
 
-FROM maven:alpine as build
-WORKDIR /app
-COPY --from=git /app/KameleoonTrialTask /app
-RUN --mount=type=cache,target=/root/.m2 mvn clean package -Dmaven.test.skip
+COPY .mvn .mvn
+COPY mvnw .
+COPY pom.xml .
+COPY src src
 
+RUN ./mvnw clean package
 
-FROM amazoncorretto:8  as run
-WORKDIR /app
-COPY --from=build /app/target/*.jar /app/app.jar
+FROM openjdk:17-alpine as run
+COPY --from=build target/KameleoonTrialTask-0.0.1-SNAPSHOT.jar app.jar
 
-ENTRYPOINT ["java", "jar", "app.jar"]
+ENTRYPOINT [ "sh", "-c", "java $JAVA_OPTS -jar app.jar" ]

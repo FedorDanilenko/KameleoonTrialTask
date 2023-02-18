@@ -1,13 +1,10 @@
-version: '2.16.0'
+version: '3.9'
 
 services:
   app:
-    mem_limit: 10g
     build:
       context: .
-      args:
-        URL_GIT: https://github.com/FedorDanilenko/KameleoonTrialTask.git
+      dockerfile: Dockerfile
     container_name: kameleoontrialtask
-    restart: unless-stopped
     ports:
       - "8080:8080"
