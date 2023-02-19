@@ -15,16 +15,19 @@ import org.springframework.stereotype.Service;
 import org.springframework.validation.annotation.Validated;
 
 @Service
-@Validated
-@RequiredArgsConstructor
 @Transactional
-@Data
+@Validated
+@Builder
 public class UserService {
 
-    @Autowired
-    private UserRepo userRepo;
+    private final UserRepo userRepo;
+    private final UserMapper userMapper;
 
-    private UserMapper userMapper;
+    @Autowired
+    public UserService(UserRepo userRepo, UserMapper userMapper) {
+        this.userRepo = userRepo;
+        this.userMapper = userMapper;
+    }
 
     public UserOutDto create(UserInDto userInDto) throws AlreadyExistEx {
         try {

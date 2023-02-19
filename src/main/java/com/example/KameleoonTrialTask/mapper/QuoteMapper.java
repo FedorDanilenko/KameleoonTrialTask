@@ -10,14 +10,14 @@ import java.util.List;
 
 public class QuoteMapper {
 
-    public static QuoteEntity toQuote(QuoteInDto quoteInDto){
+    public QuoteEntity toQuote(QuoteInDto quoteInDto){
         return QuoteEntity.builder()
                 .id(quoteInDto.getUserId())
                 .text(quoteInDto.getText())
                 .build();
     }
 
-    public static QuoteOutDto toDto(QuoteEntity quoteEntity){
+    public QuoteOutDto toDto(QuoteEntity quoteEntity){
         return QuoteOutDto.builder()
                 .id(quoteEntity.getId())
                 .text(quoteEntity.getText())
@@ -25,14 +25,14 @@ public class QuoteMapper {
                 .build();
     }
 
-    public static QuoteDetailDto toDetail(QuoteEntity quote){
+    public QuoteDetailDto toDetail(QuoteEntity quote){
         return QuoteDetailDto.builder()
                 .id(quote.getId())
                 .text(quote.getText())
                 .build();
     }
 
-    public static ListQuoteDto toListTop(List<QuoteEntity> quotes){
+    public ListQuoteDto toListTop(List<QuoteEntity> quotes){
         return ListQuoteDto.builder()
                 .quotes(quotes).build();
     }
