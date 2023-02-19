@@ -11,23 +11,35 @@ import com.example.KameleoonTrialTask.exception.*;
 import com.example.KameleoonTrialTask.mapper.QuoteMapper;
 import com.example.KameleoonTrialTask.repository.QuoteRepo;
 import com.example.KameleoonTrialTask.repository.UserRepo;
+import com.example.KameleoonTrialTask.repository.VoteRepo;
 import jakarta.transaction.Transactional;
+import lombok.Builder;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.validation.annotation.Validated;
 
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Random;
 
 @Service
+@Transactional
+@Validated
+@Builder
 public class QuoteService {
 
-    @Autowired
     private QuoteRepo quoteRepo;
-    @Autowired
     private QuoteMapper quoteMapper;
-    @Autowired
     private UserRepo userRepo;
+    private VoteRepo voteRepo;
+
+    @Autowired
+    public QuoteService(QuoteRepo quoteRepo, QuoteMapper quoteMapper, UserRepo userRepo, VoteRepo voteRepo) {
+        this.quoteRepo = quoteRepo;
+        this.quoteMapper = quoteMapper;
+        this.userRepo = userRepo;
+        this.voteRepo = voteRepo;
+    }
 
     public QuoteOutDto addQuote(QuoteInDto quoteInDto) throws AlreadyExistEx, NotFoundEx {
         UserEntity user = userRepo.findById(quoteInDto.getUserId())
@@ -87,6 +99,7 @@ public class QuoteService {
     public void deleteQuote (Long id) throws NotFoundEx {
         QuoteEntity quote = quoteRepo.findById(id)
                 .orElseThrow(() -> new NotFoundEx("Quote not found"));
+        voteRepo.deleteByQuote(quote);
         quoteRepo.delete(quote);
     }
 

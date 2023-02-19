@@ -13,6 +13,7 @@ import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.junit.jupiter.MockitoExtension;
 
+import static org.mockito.Mockito.*;
 import java.time.LocalDateTime;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -56,6 +57,6 @@ class UserServiceTest {
 
         assertEquals(ID, userOutDtoResult.getId());
         assertEquals(userInDto.getName(), userOutDtoResult.getName());
-        Mockito.verify(userRepo, Mockito.times(1)).save(user);
+        verify(userRepo, times(1)).save(user);
     }
 }
