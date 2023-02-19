@@ -50,9 +50,9 @@ class QuoteServiceTest {
             .text("text2")
             .score(2L)
             .build();
-    private final QuoteDetailDto quoteDetail1 = QuoteDetailDto.builder()
-            .id(ID_1)
-            .text("text1")
+    private final QuoteOutDto quoteUp = QuoteOutDto.builder()
+            .id(ID_2)
+            .text("New text")
             .build();
     private final QuoteDetailDto quoteDetail2 = QuoteDetailDto.builder()
             .id(ID_2)
@@ -81,7 +81,7 @@ class QuoteServiceTest {
     @Test
     void addQuote() throws NotFoundEx, AlreadyExistEx {
         Mockito.when(quoteRepo.save(any())).thenReturn(quote1);
-        Mockito.when(userRepo.findById(anyLong())).thenReturn(Optional.ofNullable(user));
+        Mockito.when(userRepo.findById(any())).thenReturn(Optional.ofNullable(user));
         Mockito.when(quoteMapper.toQuote(quoteInDto)).thenReturn(quote1);
         Mockito.when(quoteMapper.toDto(quote1)).thenReturn(quoteOutDto);
 
@@ -119,7 +119,7 @@ class QuoteServiceTest {
 
     @Test
     void getRandomQuote() {
-        Mockito.when(quoteRepo.findAll()).thenReturn(List.of(quote1, quote2));
+        Mockito.when(quoteRepo.findAll()).thenReturn(List.of(quote1));
         Mockito.when(quoteMapper.toDto(quote1)).thenReturn(quoteOutDto);
 
         QuoteOutDto quoteResult3 = quoteService.getRandomQuote();
@@ -145,12 +145,12 @@ class QuoteServiceTest {
     void updateQuote() throws NotFoundEx {
         Mockito.when(quoteRepo.findById(anyLong())).thenReturn(Optional.of(quote2));
         Mockito.when(quoteRepo.saveAndFlush(quote2)).thenReturn(quote2);
-        Mockito.when(quoteMapper.toDto(quote2)).thenReturn(quoteOutDto);
+        Mockito.when(quoteMapper.toDto(quote2)).thenReturn(quoteUp);
 
         QuoteOutDto quoteResult4 = quoteService.updateQuote(ID_2, quoteInDto);
 
         assertEquals(ID_2, quoteResult4.getId());
-        assertEquals("text1", quoteResult4.getText());
+        assertEquals("New text", quoteResult4.getText());
         verify(quoteRepo, times(1)).findById(ID_2);
         verify(quoteRepo, times(1)).saveAndFlush(quote2);
     }
