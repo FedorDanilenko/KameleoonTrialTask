@@ -15,7 +15,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.validation.annotation.Validated;
 
 @Service
-@Transactional
+@Transactional(rollbackOn = {AlreadyExistEx.class, RuntimeException.class})
 @Validated
 @Builder
 public class UserService {
