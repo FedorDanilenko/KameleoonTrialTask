@@ -5,9 +5,11 @@ import com.example.KameleoonTrialTask.dto.quote.QuoteDetailDto;
 import com.example.KameleoonTrialTask.dto.quote.QuoteInDto;
 import com.example.KameleoonTrialTask.dto.quote.QuoteOutDto;
 import com.example.KameleoonTrialTask.entity.QuoteEntity;
+import org.springframework.stereotype.Component;
 
 import java.util.List;
 
+@Component
 public class QuoteMapper {
 
     public QuoteEntity toQuote(QuoteInDto quoteInDto){

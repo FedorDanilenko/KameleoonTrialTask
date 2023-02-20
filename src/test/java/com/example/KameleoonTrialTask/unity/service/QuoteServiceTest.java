@@ -1,4 +1,4 @@
-package com.example.KameleoonTrialTask.service;
+package com.example.KameleoonTrialTask.unity.service;
 
 import com.example.KameleoonTrialTask.dto.graph.ListQuoteDto;
 import com.example.KameleoonTrialTask.dto.quote.QuoteDetailDto;
@@ -13,6 +13,7 @@ import com.example.KameleoonTrialTask.mapper.QuoteMapper;
 import com.example.KameleoonTrialTask.repository.QuoteRepo;
 import com.example.KameleoonTrialTask.repository.UserRepo;
 import com.example.KameleoonTrialTask.repository.VoteRepo;
+import com.example.KameleoonTrialTask.service.QuoteService;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;

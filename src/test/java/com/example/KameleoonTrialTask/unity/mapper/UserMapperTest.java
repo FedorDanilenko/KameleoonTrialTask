@@ -1,9 +1,10 @@
-package com.example.KameleoonTrialTask.mapper;
+package com.example.KameleoonTrialTask.unity.mapper;
 
 import com.example.KameleoonTrialTask.dto.user.UserInDto;
 import com.example.KameleoonTrialTask.dto.user.UserOutDto;
 import com.example.KameleoonTrialTask.entity.QuoteEntity;
 import com.example.KameleoonTrialTask.entity.UserEntity;
+import com.example.KameleoonTrialTask.mapper.UserMapper;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;

@@ -1,4 +1,4 @@
-package com.example.KameleoonTrialTask.service;
+package com.example.KameleoonTrialTask.unity.service;
 
 import com.example.KameleoonTrialTask.dto.user.UserInDto;
 import com.example.KameleoonTrialTask.dto.user.UserOutDto;
@@ -6,6 +6,7 @@ import com.example.KameleoonTrialTask.entity.UserEntity;
 import com.example.KameleoonTrialTask.exception.AlreadyExistEx;
 import com.example.KameleoonTrialTask.mapper.UserMapper;
 import com.example.KameleoonTrialTask.repository.UserRepo;
+import com.example.KameleoonTrialTask.service.UserService;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
