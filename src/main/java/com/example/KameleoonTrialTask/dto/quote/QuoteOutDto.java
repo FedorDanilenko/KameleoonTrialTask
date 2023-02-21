@@ -10,6 +10,5 @@ public class QuoteOutDto {
 
     private Long id;
     private String text;
-    private UserOutDto user;
     private Long score;
 }

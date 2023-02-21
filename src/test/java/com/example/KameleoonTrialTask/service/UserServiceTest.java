@@ -6,6 +6,7 @@ import com.example.KameleoonTrialTask.entity.UserEntity;
 import com.example.KameleoonTrialTask.exception.AlreadyExistEx;
 import com.example.KameleoonTrialTask.mapper.UserMapper;
 import com.example.KameleoonTrialTask.repository.UserRepo;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,6 +28,11 @@ class UserServiceTest {
     private UserRepo userRepo;
     @Autowired
     private UserService userService;
+
+    @BeforeEach
+    void clearDB() {
+        userRepo.deleteAll();
+    }
 
     @Test
     void create() throws AlreadyExistEx {
@@ -54,7 +60,6 @@ class UserServiceTest {
                 .email("email2@email.com")
                 .password("pass2")
                 .build();
-        userRepo.deleteAll();
         userRepo.save(user);
         assertThrows(AlreadyExistEx.class, () -> {
             userService.create(userInDto);

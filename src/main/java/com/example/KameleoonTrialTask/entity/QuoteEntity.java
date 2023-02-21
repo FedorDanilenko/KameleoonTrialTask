@@ -34,7 +34,7 @@ public class QuoteEntity {
     @CreationTimestamp
     private LocalDateTime dataCreated;
 
-    @Transient
+    @Column(name = "score")
     private Long score;
 
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "quote", orphanRemoval = true)

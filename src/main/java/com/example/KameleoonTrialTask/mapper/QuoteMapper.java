@@ -14,7 +14,6 @@ public class QuoteMapper {
 
     public QuoteEntity toQuote(QuoteInDto quoteInDto){
         return QuoteEntity.builder()
-                .id(quoteInDto.getUserId())
                 .text(quoteInDto.getText())
                 .build();
     }
