@@ -88,8 +88,8 @@ public class QuoteService {
     }
     @Transactional
     public QuoteOutDto updateQuote(Long id, QuoteInDto quoteInDto) throws NotFoundEx {
-        QuoteEntity quote = quoteRepo.findById(id)
-                .orElseThrow(() -> new NotFoundEx("Quote not found"));
+        QuoteEntity quote = quoteRepo.findByIdAndUserId(id, quoteInDto.getUserId())
+                .orElseThrow(() -> new NotFoundEx("Quote Not Found"));
         quote.setText(quoteInDto.getText());
         quote.setDataCreated(LocalDateTime.now());
         return quoteMapper.toDto(quoteRepo.saveAndFlush(quote));

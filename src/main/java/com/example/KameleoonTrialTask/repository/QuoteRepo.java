@@ -9,4 +9,6 @@ import java.util.Optional;
 
 @Repository
 public interface QuoteRepo extends JpaRepository<QuoteEntity, Long> {
+
+    Optional<QuoteEntity> findByIdAndUserId(Long id, Long userId);
 }

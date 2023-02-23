@@ -32,46 +32,46 @@ public class VoteService {
 
 
     public void voteUp (Long quoteId, Long userId) throws NotFoundEx {
-        UserEntity user = userRepo.findById(userId)
-                .orElseThrow(() -> new NotFoundEx("User not found"));
-        QuoteEntity quote = quoteRepo.findById(quoteId)
+        QuoteEntity quote = quoteRepo.findByIdAndUserId(quoteId, userId)
                 .orElseThrow(() -> new NotFoundEx("Quote not found"));
         VoteEntity vote = voteRepo.findByQuoteIdAndUserId(quoteId, userId);
         if (vote != null && vote.getType() == VoteType.DOWN) {
             vote.setType(VoteType.UP);
+            voteRepo.saveAndFlush(vote);
             quote.setScore(quote.getScore() + 1);
             quoteRepo.saveAndFlush(quote);
         } else {
             vote = new VoteEntity();
             vote.setType(VoteType.UP);
-            vote.setUser(user);
+            vote.setUser(quote.getUser());
             vote.setQuote(quote);
+            voteRepo.save(vote);
             quote.setScore(quote.getScore() + 1);
             quoteRepo.saveAndFlush(quote);
         }
     }
     public void voteDown (Long quoteId, Long userId) throws NotFoundEx {
-        UserEntity user = userRepo.findById(userId)
-                .orElseThrow(() -> new NotFoundEx("User not found"));
-        QuoteEntity quote = quoteRepo.findById(quoteId)
+        QuoteEntity quote = quoteRepo.findByIdAndUserId(quoteId, userId)
                 .orElseThrow(() -> new NotFoundEx("Quote not found"));
         VoteEntity vote = voteRepo.findByQuoteIdAndUserId(quoteId, userId);
         if (vote != null && vote.getType() == VoteType.UP) {
             vote.setType(VoteType.DOWN);
+            voteRepo.saveAndFlush(vote);
             quote.setScore(quote.getScore() - 1);
             quoteRepo.saveAndFlush(quote);
         } else {
             vote = new VoteEntity();
             vote.setType(VoteType.DOWN);
-            vote.setUser(user);
+            vote.setUser(quote.getUser());
             vote.setQuote(quote);
+            voteRepo.save(vote);
             quote.setScore(quote.getScore() - 1);
             quoteRepo.saveAndFlush(quote);
         }
     }
 
-    public GraphVoteDto getVoteHistory(Long qouteId) {
-        List<VoteEntity> votes = voteRepo.findAllByQuoteId(qouteId);
+    public GraphVoteDto getVoteHistory(Long quoteId) {
+        List<VoteEntity> votes = voteRepo.findAllByQuoteId(quoteId);
         Map<Timestamp, Integer> voteHistory = new HashMap<>();
         for (VoteEntity vote : votes) {
             Timestamp timestamp = Timestamp.valueOf(vote.getDataCreated());

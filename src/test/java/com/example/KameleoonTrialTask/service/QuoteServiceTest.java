@@ -16,17 +16,12 @@ import com.example.KameleoonTrialTask.repository.VoteRepo;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.runner.RunWith;
-import org.mapstruct.control.MappingControl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
 
-import java.lang.reflect.Array;
-import java.time.LocalDateTime;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-import java.util.Optional;
+
+import java.util.*;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -146,9 +141,10 @@ class QuoteServiceTest {
         createSomeQuotes();
         UserEntity user = userRepo.findById(1L)
                 .orElseThrow(() -> new NotFoundEx("User not found"));
-        QuoteEntity quote = quoteRepo.findById(1L)
+        QuoteEntity quote1 = quoteRepo.findById(1L)
                 .orElseThrow(() -> new NotFoundEx("Quote not found"));
-        quote.setUser(user);
+        quote1.setUser(user);
+        quoteRepo.saveAndFlush(quote1);
         QuoteInDto quoteInDto = QuoteInDto.builder()
                 .text("text-text")
                 .userId(1L)
